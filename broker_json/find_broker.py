@@ -10,9 +10,13 @@ except ImportError:
     # Next, we'll try to use the broker from zeekctl, but we need to find it.
     # We'll find it via zeek-config --python_dir
 
-    broker_error_message = "Could not import the Python Broker bindings. See: " \
-                           "https://docs.zeek.org/projects/broker/en/stable/python.html#installation-in-a-virtual" \
-                           "-environment "
+    broker_error_message = \
+        "Could not import the Python Broker bindings. See: " \
+        "https://docs.zeek.org/projects/broker/en/stable/python.html#installation-in-a-virtual-environment " \
+        "" \
+        "Note: If you see a message like \"dynamic module does not define module export function (PyInit__broker)\"," \
+        "you do have Broker bindings, but have a Python version mismatch. Make sure Zeek is being built with the system" \
+        "default Python3, or try running this with another Python version."
 
     import distutils.spawn
 
