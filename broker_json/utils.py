@@ -52,6 +52,15 @@ def get_record_types(type_name):
 
     return data
 
+# Broker returns native objects for Port. This will just give a string.
+def fix_ports(val):
+    try:
+        for i in range(len(val)):
+            val[i] = fix_ports(val[i])
+    except TypeError:
+        if isinstance(val, broker._broker.Port):
+            return str(val)
+
 
 def to_json(val):
     """Convert broker types to JSON."""
