@@ -27,8 +27,6 @@ jobs:
           curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_20.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null
           sudo apt update
           sudo apt install zeek-lts
-          find /opt/zeek
-          PATH=/opt/zeek/bin:$PATH which zeek-config
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
@@ -37,4 +35,4 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test with pytest
         run: |
-          pytest
+          PATH=/opt/zeek/bin:$PATH pytest
