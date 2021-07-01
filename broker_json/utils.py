@@ -54,11 +54,19 @@ def get_record_types(type_name):
 
 # Broker returns native objects for Port. This will just give a string.
 def fix_ports(val):
-    if isinstance(val, broker._broker.Port):
+    if isinstance(val, broker._broker.Port) or isinstance(val, str):
         return str(val)
     try:
+        is_tuple = isinstance(val, tuple)
+        # tuples are immutable
+        if is_tuple:
+            val = list(val)
+
         for i in range(len(val)):
             val[i] = fix_ports(val[i])
+
+        if is_tuple:
+            val = tuple(val)
     except TypeError:
         pass
 
