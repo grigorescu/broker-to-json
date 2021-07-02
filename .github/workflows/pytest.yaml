@@ -3,16 +3,10 @@ name: Python package
 on: [push]
 
 jobs:
-  build:
-
+  test-ubuntu:
     runs-on: ubuntu-20.04
-
     steps:
       - uses: actions/checkout@v2
-#      - name: Set up Python 3.8
-#        uses: actions/setup-python@v2
-#        with:
-#          python-version: 3.8
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -33,3 +27,11 @@ jobs:
       - name: Test with pytest
         run: |
           PATH=/opt/zeek/bin:$PATH pytest
+
+
+  import sys
+
+  sys.path.insert(0, "/opt/zeek_from_src/lib64/zeek/python")
+  sys.path.insert(0, "/opt/zeek_from_src/lib64/zeek/python/zeekctl")
+
+  from ZeekControl.zeekctl import ZeekCtl

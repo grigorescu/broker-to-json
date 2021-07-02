@@ -1,0 +1,5 @@
+.idea
+broker_json.egg-info
+__pycache__
+broker_json/tests/_trial_temp
+dist

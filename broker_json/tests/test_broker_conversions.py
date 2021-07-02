@@ -3,7 +3,7 @@ from unittest import TestCase
 import ipaddress
 import json
 
-from broker_json import fix_ports, from_json, to_json, broker
+from broker_json.conversions import fix_ports, from_json, to_json, broker
 
 
 class TestUtilsJSON(TestCase):
