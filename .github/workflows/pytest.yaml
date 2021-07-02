@@ -27,11 +27,3 @@ jobs:
       - name: Test with pytest
         run: |
           PATH=/opt/zeek/bin:$PATH pytest
-
-
-  import sys
-
-  sys.path.insert(0, "/opt/zeek_from_src/lib64/zeek/python")
-  sys.path.insert(0, "/opt/zeek_from_src/lib64/zeek/python/zeekctl")
-
-  from ZeekControl.zeekctl import ZeekCtl
