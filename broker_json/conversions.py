@@ -1,6 +1,7 @@
 # These utilities need Broker bindings.
 
 from . import find_broker
+from .utils import get_index_types, get_record_types, get_yield_type
 
 import datetime
 import ipaddress
@@ -35,9 +36,13 @@ def to_json(val):
     if val is None:
         return val
 
-    if isinstance(val, bool) or isinstance(val, str) or isinstance(val,
-                                                                   float) or isinstance(
-        val, int) or isinstance(val, bytes):
+    if (
+        isinstance(val, bool)
+        or isinstance(val, str)
+        or isinstance(val, float)
+        or isinstance(val, int)
+        or isinstance(val, bytes)
+    ):
         return val
 
     elif isinstance(val, datetime.timedelta):
@@ -45,11 +50,13 @@ def to_json(val):
     elif isinstance(val, datetime.datetime):
         return float(val.timestamp())
 
-    elif isinstance(val, ipaddress.IPv4Address) or isinstance(val,
-                                                              ipaddress.IPv6Address):
+    elif isinstance(val, ipaddress.IPv4Address) or isinstance(
+        val, ipaddress.IPv6Address
+    ):
         return val.compressed.lower()
-    elif isinstance(val, ipaddress.IPv4Network) or isinstance(val,
-                                                              ipaddress.IPv6Network):
+    elif isinstance(val, ipaddress.IPv4Network) or isinstance(
+        val, ipaddress.IPv6Network
+    ):
         return val.compressed.lower()
 
     elif isinstance(val, broker.Count):
@@ -118,7 +125,7 @@ def from_json(val, type_name):
 
     # Composite types
     elif type_name.startswith("set["):
-        inner_type_name = type_name.split('set[', 1)[1]
+        inner_type_name = type_name.split("set[", 1)[1]
         inner_type_name = inner_type_name[:-1]
         data = set([from_json(x, inner_type_name) for x in val])
         v = broker.Data(data)
@@ -147,11 +154,11 @@ def from_json(val, type_name):
 
         return broker.Data(data)
 
-    elif type_name.startswith('record {'):
+    elif type_name.startswith("record {"):
         types = get_record_types(type_name)
         data = []
         for i in range(len(types)):
-            field_type = types[i]['field_type']
+            field_type = types[i]["field_type"]
             if len(val) > i:
                 data.append(from_json(val[i], field_type))
             else:
